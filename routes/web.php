@@ -16,6 +16,10 @@ Route::get('/', function () {
 });
 //测试
 Route::any('/Text/test','Test\TextController@test');
+
 Route::get('/info', function () {
     phpinfo();
 });
+
+//测试
+Route::post('/login','User\UserController@login');
