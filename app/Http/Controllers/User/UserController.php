@@ -14,19 +14,27 @@ class UserController extends Controller
     {
         $arr = json_decode(file_get_contents("php://input"),true);
         $arr['pass']=password_hash($arr['pass'],PASSWORD_DEFAULT);
-        $res = User::insertGetId($arr);
-        if($res)
-        {
-            $p = [
-                'num'=>1,
-                'error'=>'注册成功！'
-            ];
-        }else
-        {
+        $a = User::where('email',$arr['email'])->first();
+        if($a){
             $p = [
                 'num'=>2,
-                'error'=>'注册失败！'
+                'error'=>'邮箱已经存在！'
             ];
+        }else{
+            $res = User::insertGetId($arr);
+            if($res)
+            {
+                $p = [
+                    'num'=>1,
+                    'error'=>'注册成功！'
+                ];
+            }else
+            {
+                $p = [
+                    'num'=>2,
+                    'error'=>'注册失败！'
+                ];
+            }
         }
         echo json_encode($p);
     }
