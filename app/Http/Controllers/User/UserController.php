@@ -9,6 +9,27 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 class UserController extends Controller
 {
+    //regist
+    public function regist()
+    {
+        $arr = json_decode(file_get_contents("php://input"),true);
+        $arr['pass']=password_hash($arr['pass'],PASSWORD_DEFAULT);
+        $res = User::insertGetId($arr);
+        if($res)
+        {
+            $p = [
+                'num'=>1,
+                'error'=>'注册成功！'
+            ];
+        }else
+        {
+            $p = [
+                'num'=>2,
+                'error'=>'注册失败！'
+            ];
+        }
+        echo json_encode($p);
+    }
     //login
     public function login()
     {

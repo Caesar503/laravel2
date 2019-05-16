@@ -23,3 +23,5 @@ Route::get('/info', function () {
 
 //测试
 Route::post('/login','User\UserController@login');
+
+Route::post('/regist','User\UserController@regist');
