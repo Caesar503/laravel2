@@ -19,6 +19,7 @@ class PayController extends Controller
         $this->app_id = env('PAY_APP_ID');
         $this->gate_way = 'https://openapi.alipaydev.com/gateway.do';
         $this->notify_url = env('PAY_NOTIFY_URL');
+        $this->return_url = env('PAY_RETURN_URL');
         $this->rsaPrivateKeyFilePath = openssl_pkey_get_private("file://".storage_path('app/keys/private.pem'));    //应用私钥
         $this->aliPubKey = openssl_pkey_get_private("file://".storage_path('app/keys/pay_pub.pem')); //支付宝公钥
     }
@@ -41,6 +42,7 @@ class PayController extends Controller
             'timestamp' => date('Y-m-d H:i:s',time()),
             'version' => '1.0',
             'notify_url' => $this->notify_url,
+            'return_url' => $this->return_url,
             'biz_content' => json_encode($content),
         ];
         //拼接参数
@@ -67,7 +69,7 @@ class PayController extends Controller
     //同步
     public function alipayReturn()
     {
-        print_r($_GET);
+        header('Location:http://127.0.0.1:8848/hellow world2/ok.html');
     }
     public function alipayNotify()
     {
