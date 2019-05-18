@@ -74,9 +74,8 @@ class PayController extends Controller
     public function alipayNotify()
     {
         $data = $_POST;
-        $da = explode($data,"&");
         //写入日志
-        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$da."\n";
+        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
         print_r($data);
 //        unset($data['sign']);
