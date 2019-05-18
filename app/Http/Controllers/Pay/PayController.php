@@ -73,7 +73,7 @@ class PayController extends Controller
     }
     public function alipayNotify()
     {
-        $data = json_decode($_POST);
+        $data = json_decode($_POST,true);
         //写入日志
         $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$data."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
