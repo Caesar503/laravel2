@@ -73,18 +73,20 @@ class PayController extends Controller
     }
     public function alipayNotify()
     {
-        $data = json_decode($_POST,true);
+        $data = $_POST;
+        $da = explode($data,"&");
         //写入日志
-        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$data."\n";
+        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$da."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
-        unset($data['sign']);
-        unset($data['sign_type']);
-        ksort($data);
-        $a = '';
-        foreach($data as $k =>$v){
-            $a.=$v.'='.urldecode($v).'&';
-        }
-        $a1 =rtrim($a,'&');
+        print_r($data);
+//        unset($data['sign']);
+//        unset($data['sign_type']);
+//        ksort($data);
+//        $a = '';
+//        foreach($data as $k =>$v){
+//            $a.=$v.'='.urldecode($v).'&';
+//        }
+//        $a1 =rtrim($a,'&');
 
     }
 }
