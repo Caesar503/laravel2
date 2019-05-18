@@ -39,7 +39,7 @@ class GoodsController extends Controller
             'uid'=>$uid,
         ];
         //查询在购物车是否存在
-        $res = Cart::where(['goods_id'=>$id,'is_status'=>1])->first();
+        $res = Cart::where(['goods_id'=>$id,'is_status'=>1,'uid'=>$uid])->first();
         if($res){
             $respon = Cart::where('goods_id',$id)->update(['num'=>$res->num+1]);
         }else{
