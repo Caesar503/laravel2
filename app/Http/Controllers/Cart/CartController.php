@@ -17,7 +17,11 @@ class CartController extends Controller
         $uid = $_GET['uid'];
         //查询该用户下没有生成订单的购物车列表
         $cartList = Cart::where(['uid'=>$uid,'is_status'=>1])->get()->toArray();
-        echo json_encode($cartList);
+        $c = [
+            'num'=> 1,
+            'data'=>$cartList
+        ];
+        echo json_encode($c);
     }
     //生成订单
     public function createOrder()
@@ -80,7 +84,7 @@ class CartController extends Controller
                 'num'=>2,
                 'msg'=>'失败了奥？！？！？！？！'
             ];
-            die(json_encode($r,JSON_UNESCAPED_UNICODE));
+            die(json_encode($r));
         }
         $r =[
             'num'=>1,
@@ -194,6 +198,10 @@ class CartController extends Controller
     {
         $uid = $_GET['uid'];
         $orderInfo = Order::where(['uid'=>$uid,'is_status'=>1])->get()->toArray();
-        echo json_encode($orderInfo);
+        $o = [
+            'num'=>1,
+            'data'=>$orderInfo
+        ];
+        echo json_encode($o);
     }
 }

@@ -12,7 +12,11 @@ class GoodsController extends Controller
     {
         //获取商品信息
         $res = Goods::get()->toArray();
-        echo json_encode($res);
+        $r = [
+            'num'=>1,
+            'data'=>$res
+        ];
+        echo json_encode($r);
     }
     //添加购物车
     public function addCart(Request $request)
@@ -67,7 +71,11 @@ class GoodsController extends Controller
                 'msg'=>'没有此商品信息'
             ];
         }else{
-            $a = $info->toArray();
+            $a=[
+                'num'=>1,
+                'msg'=>$info->toArray()
+            ];
+//            $a = $info->toArray();
         }
         echo json_encode($a,JSON_UNESCAPED_UNICODE);
     }
