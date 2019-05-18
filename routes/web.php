@@ -45,3 +45,5 @@ Route::get('/alipay','Pay\PayController@pay');
 Route::get('/alipay/tong','Pay\PayController@alipayReturn');
 //异步
 Route::post('/alipay/notify','Pay\PayController@alipayNotify');
+//tesgu
+Route::get('/aaa','Pay\PayController@aaa');

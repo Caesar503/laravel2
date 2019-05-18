@@ -75,9 +75,8 @@ class PayController extends Controller
     {
         $data = $_POST;
         //写入日志
-        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
+        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$data."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
-        print_r($data);
 //        unset($data['sign']);
 //        unset($data['sign_type']);
 //        ksort($data);
