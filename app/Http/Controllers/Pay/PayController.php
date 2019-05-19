@@ -94,6 +94,7 @@ class PayController extends Controller
         $aa =rtrim($a,'&');
         //验签
         $res = openssl_verify($aa,base64_decode($sign),$this->aliPubKey,OPENSSL_ALGO_SHA256);
+        dump($res);die;
         if($res){
             //TODO  处理逻辑业务
 
