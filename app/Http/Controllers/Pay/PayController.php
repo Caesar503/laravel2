@@ -89,12 +89,12 @@ class PayController extends Controller
         //获取等待签名的字符串
         $a = '';
         foreach($data as $k =>$v){
-            $a.=$k.'='.urlencode($v).'&';
+            $a.=$k.'='.$v.'&';
         }
         $aa =rtrim($a,'&');
         //验签
         $res = openssl_verify($aa,base64_decode($sign),$this->aliPubKey,OPENSSL_ALGO_SHA256);
-        file_put_contents("logs/notify.log",$res.'\n\n\n\n\n',FILE_APPEND);
+        file_put_contents("logs/notify.log",$res."\n\n\n\n\n",FILE_APPEND);
         if($res){
             //TODO  处理逻辑业务
 
