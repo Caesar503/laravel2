@@ -52,12 +52,10 @@ class PayController extends Controller
             $a.=$k.'='.$v.'&';
         }
         $b = rtrim($a,'&');
-        $kk = openssl_pkey_get_private("file://".storage_path('app/keys/private.pem'));
-//        dump(openssl_error_string());
-//        dump($kk);die;
+
         //签名
-        dump($this->aliPubKey);
-        dump(openssl_error_string());die;
+//        dump($this->aliPubKey);
+//        dump(openssl_error_string());die;
         openssl_sign($b,$sign,openssl_pkey_get_private("file://".storage_path('app/keys/private.pem')),OPENSSL_ALGO_SHA256);
         $sign = base64_encode($sign);
         $data['sign']=$sign;
