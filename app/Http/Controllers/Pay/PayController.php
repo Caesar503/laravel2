@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Pay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-
+use App\Model\Order;
 class PayController extends Controller
 {
     public $app_id;
@@ -52,6 +52,9 @@ class PayController extends Controller
             $a.=$k.'='.$v.'&';
         }
         $b = rtrim($a,'&');
+        $kk = openssl_pkey_get_private("file://".storage_path('app/keys/private.pem'));
+        dump(openssl_error_string());
+        dump($kk);die;
         //签名
         openssl_sign($b,$sign,openssl_pkey_get_private("file://".storage_path('app/keys/private.pem')),OPENSSL_ALGO_SHA256);
         $sign = base64_encode($sign);
@@ -75,17 +78,31 @@ class PayController extends Controller
     {
         $data = $_POST;
         $sign = $data['sign'];
+        $order_sn =$data['order'];
+        $trade_no = $data['trade_no'];
         //写入日志
         $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
         unset($data['sign']);
         unset($data['sign_type']);
+
         ksort($data);
+        //获取等待签名的字符串
         $a = '';
         foreach($data as $k =>$v){
-            $a.=$v.'='.urldecode($v).'&';
+            $a.=$v.'='.urlencode($v).'&';
         }
         $aa =rtrim($a,'&');
-        openssl_verify($sign,$aa,$this->aliPubKey,OPENSSL_ALGO_SHA256);
+        //验签
+        $res = openssl_verify($aa,base64_decode($sign),$this->aliPubKey);
+        if($res==1){
+            //TODO  处理逻辑业务
+
+            //修改订单
+            Order::where('order_sn',$trade_no)->update(['pay_status'=>2]);
+            echo 'success';
+        }else{
+            echo 'fail';
+        }
     }
 }
