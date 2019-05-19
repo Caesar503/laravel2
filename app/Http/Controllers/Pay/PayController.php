@@ -78,7 +78,7 @@ class PayController extends Controller
     {
         $data = $_POST;
         $sign = $data['sign'];
-        $order_sn =$data['order'];
+        $order_sn =$data['order_sn'];
         $trade_no = $data['trade_no'];
         //写入日志
         $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
@@ -94,7 +94,7 @@ class PayController extends Controller
         }
         $aa =rtrim($a,'&');
         //验签
-        $res = openssl_verify($aa,base64_decode($sign),$this->aliPubKey);
+        $res = openssl_verify($aa,base64_decode($sign),$this->aliPubKey,OPENSSL_ALGO_SHA256);
         if($res==1){
             //TODO  处理逻辑业务
 
