@@ -89,7 +89,7 @@ class PayController extends Controller
         //获取等待签名的字符串
         $a = '';
         foreach($data as $k =>$v){
-            $a.=$v.'='.urlencode($v).'&';
+            $a.=$k.'='.urlencode($v).'&';
         }
         $aa =rtrim($a,'&');
         //验签
