@@ -53,7 +53,7 @@ class PayController extends Controller
         }
         $b = rtrim($a,'&');
         //签名
-        openssl_sign($b,$sign,$this->rsaPrivateKeyFilePath,OPENSSL_ALGO_SHA256);
+        openssl_sign($b,$sign,openssl_pkey_get_private("file://".storage_path('app/keys/private.pem')),OPENSSL_ALGO_SHA256);
         $sign = base64_encode($sign);
         $data['sign']=$sign;
 
@@ -74,17 +74,18 @@ class PayController extends Controller
     public function alipayNotify()
     {
         $data = $_POST;
+        $sign = $data['sign'];
         //写入日志
-        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".$data."\n";
+        $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
-//        unset($data['sign']);
-//        unset($data['sign_type']);
-//        ksort($data);
-//        $a = '';
-//        foreach($data as $k =>$v){
-//            $a.=$v.'='.urldecode($v).'&';
-//        }
-//        $a1 =rtrim($a,'&');
-
+        unset($data['sign']);
+        unset($data['sign_type']);
+        ksort($data);
+        $a = '';
+        foreach($data as $k =>$v){
+            $a.=$v.'='.urldecode($v).'&';
+        }
+        $aa =rtrim($a,'&');
+        openssl_verify($sign,$aa,$this->aliPubKey,OPENSSL_ALGO_SHA256);
     }
 }
