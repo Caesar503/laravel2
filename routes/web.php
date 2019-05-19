@@ -47,3 +47,9 @@ Route::get('/alipay/tong','Pay\PayController@alipayReturn');
 Route::post('/alipay/notify','Pay\PayController@alipayNotify');
 //tesgu
 Route::get('/aaa','Pay\PayController@aaa');
+//微信支付
+Route::get('/weixin/{id}','Pay\WxPayController@pay');
+//微信 异步回调
+Route::post('/Weixin/pay_notify','Pay\PayController@aaa');
+//查询支付状态
+Route::get('find/pay/{id}', 'WxPayController@findpay');

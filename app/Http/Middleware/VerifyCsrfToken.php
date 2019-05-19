@@ -22,6 +22,7 @@ class VerifyCsrfToken extends Middleware
         '/login',
         '/regist',
         '/goodsinfo',
-        '/alipay/notify'
+        '/alipay/notify',
+        '/Weixin/pay_notify'
     ];
 }
