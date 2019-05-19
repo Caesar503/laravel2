@@ -78,7 +78,7 @@ class PayController extends Controller
     {
         $data = $_POST;
         $sign = $data['sign'];
-        $trade_no = $data['trade_no'];
+        $trade_no = $data['out_trade_no'];
         //写入日志
         $log = "\n>>>>>>>>>>>".date('Y-m-d H:i:s',time())."\n".json_encode($data)."\n";
         file_put_contents("logs/notify.log",$log,FILE_APPEND);
