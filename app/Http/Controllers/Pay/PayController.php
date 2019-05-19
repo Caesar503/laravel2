@@ -53,8 +53,8 @@ class PayController extends Controller
         }
         $b = rtrim($a,'&');
         $kk = openssl_pkey_get_private("file://".storage_path('app/keys/private.pem'));
-        dump(openssl_error_string());
-        dump($kk);die;
+//        dump(openssl_error_string());
+//        dump($kk);die;
         //签名
         openssl_sign($b,$sign,openssl_pkey_get_private("file://".storage_path('app/keys/private.pem')),OPENSSL_ALGO_SHA256);
         $sign = base64_encode($sign);
