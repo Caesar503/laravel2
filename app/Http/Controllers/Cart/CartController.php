@@ -197,7 +197,7 @@ class CartController extends Controller
     public function orderList()
     {
         $uid = $_GET['uid'];
-        $orderInfo = Order::where(['uid'=>$uid,'is_status'=>1])->get()->toArray();
+        $orderInfo = Order::where(['uid'=>$uid,'is_status'=>1,'pay_status'=>1])->get()->toArray();
         $o = [
             'num'=>1,
             'data'=>$orderInfo
