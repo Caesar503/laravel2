@@ -21,7 +21,7 @@ class PayController extends Controller
         $this->notify_url = env('PAY_NOTIFY_URL');
         $this->return_url = env('PAY_RETURN_URL');
         $this->rsaPrivateKeyFilePath = openssl_pkey_get_private("file://".storage_path('app/keys/private.pem'));    //应用私钥
-        $this->aliPubKey = openssl_pkey_get_private("file://".storage_path('app/keys/pay_pub.pem')); //支付宝公钥
+        $this->aliPubKey =openssl_get_publickey("file://".storage_path('app/keys/pay_pub.pem')); //支付宝公钥
     }
     public function pay()
     {
